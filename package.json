@@ -1,0 +1,36 @@
+{
+	"name": "prayer-tracker",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate",
+		"db:studio": "drizzle-kit studio"
+	},
+	"dependencies": {
+		"@libsql/client": "^0.15.9",
+		"@nuxt/eslint": "1.4.1",
+		"@nuxt/icon": "1.15.0",
+		"@nuxt/ui": "3.2.0",
+		"better-auth": "^1.2.12",
+		"date-fns": "^4.1.0",
+		"drizzle-orm": "^0.44.2",
+		"eslint": "^9.30.0",
+		"nuxt": "^3.17.5",
+		"taqwim-core-utils": "^0.1.1",
+		"typescript": "^5.8.3",
+		"vue": "^3.5.17",
+		"vue-router": "^4.5.1",
+		"zod": "^3.25.67"
+	},
+	"devDependencies": {
+		"@iconify-json/logos": "^1.2.4",
+		"@iconify-json/lucide": "^1.2.54",
+		"drizzle-kit": "^0.31.4"
+	}
+}
