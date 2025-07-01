@@ -58,7 +58,7 @@ const updatePrayer = () =>
 	});
 
 const deletePrayer = () =>
-	$fetch(`/api/tracked-prayers/${prayer.id}`, {
+	$fetch(`/api/missed-prayers/${prayer.id}`, {
 		method: "DELETE",
 		...prayersOptimisticUpdate,
 	});
