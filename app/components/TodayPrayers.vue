@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { data: trackedPrayers, pending } = await useFetch(
-	"/api/trackedPrayers",
+	"/api/tracked-prayers",
 	{ key: "tracked-prayers" }
 );
 

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-const { data: missedPrayers, status } = await useFetch("/api/trackedPrayers", {
+const { data: missedPrayers, status } = await useFetch("/api/missed-prayers", {
 	lazy: true,
 	key: "missed-prayers",
-	query: { beforeToday: true },
 });
 
 const open = ref(false);

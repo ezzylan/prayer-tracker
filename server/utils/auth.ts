@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { H3Event } from "h3";
 import { schema, useDrizzle } from "./drizzle";
 
 const { google, github } = useRuntimeConfig();
@@ -28,3 +29,18 @@ export const auth = betterAuth({
 		// },
 	},
 });
+
+export const checkAuthenticatedUser = async (event: H3Event) => {
+	const session = await auth.api.getSession({
+		headers: event.headers,
+	});
+
+	if (!session) {
+		throw createError({
+			statusCode: 401,
+			statusMessage: "Unauthorized",
+		});
+	}
+
+	return session;
+};

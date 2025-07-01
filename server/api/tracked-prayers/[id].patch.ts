@@ -1,16 +1,7 @@
 import { z } from "zod/v4";
 
 export default defineEventHandler(async (event) => {
-	const session = await auth.api.getSession({
-		headers: event.headers,
-	});
-
-	if (!session) {
-		throw createError({
-			statusCode: 401,
-			statusMessage: "Unauthorized",
-		});
-	}
+	const session = await checkAuthenticatedUser(event);
 
 	const result = await readValidatedBody(event, (body) =>
 		z.object({ isCompleted: z.boolean() }).safeParse(body)
