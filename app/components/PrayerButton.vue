@@ -51,14 +51,14 @@ const prayersOptimisticUpdate = {
 };
 
 const updatePrayer = () =>
-	$fetch(`/api/trackedPrayers/${prayer.id}`, {
+	$fetch(`/api/tracked-prayers/${prayer.id}`, {
 		method: "PATCH",
 		body: { isCompleted: !prayer.isCompleted },
 		...prayersOptimisticUpdate,
 	});
 
 const deletePrayer = () =>
-	$fetch(`/api/trackedPrayers/${prayer.id}`, {
+	$fetch(`/api/tracked-prayers/${prayer.id}`, {
 		method: "DELETE",
 		...prayersOptimisticUpdate,
 	});
