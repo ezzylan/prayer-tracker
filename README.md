@@ -6,6 +6,12 @@ A simple web-based Islamic prayer tracker built with Nuxt.
 
 -   Track today's prayers
 -   Track missed prayers
+-   Show today's prayer times (Malaysia only)
+
+> #### Sidenote 💡
+>
+> -   Prayer times are based on [JAKIM's e-Solat Portal](https://www.e-solat.gov.my/index.php). So, the prayer times and zones' GET APIs are hardcoded to the portal's URL.
+> -   Feel free to contribute to add configuration for prayer times and zones from other countries ✨
 
 ## Tech Stack
 
@@ -30,8 +36,9 @@ For easy setup, just duplicate the `.env.example` file and start from there.
 
 ## Roadmap
 
+-   [x] Show today's prayer times
 -   [ ] PWA support
--   [ ] Show today's prayer times
+-   [ ] Show notification for uncompleted prayer
 
 ## License
 

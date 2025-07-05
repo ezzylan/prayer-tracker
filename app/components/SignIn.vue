@@ -33,6 +33,7 @@ const isLoadingGoogle = ref(false);
 			}}
 		</UButton>
 		<UButton
+			v-else
 			color="neutral"
 			variant="solid"
 			:loading="isLoadingGoogle"

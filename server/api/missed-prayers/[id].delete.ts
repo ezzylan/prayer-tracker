@@ -1,7 +1,15 @@
-export default defineEventHandler(async (event) => {
-	const session = await checkAuthenticatedUser(event);
+import { z } from "zod/v4";
 
-	const { id } = getRouterParams(event);
+export default defineEventHandler(async (event) => {
+	await checkAuthenticatedUser(event);
+
+	const params = await getValidatedRouterParams(event, (body) =>
+		z.object({ id: z.string() }).safeParse(body)
+	);
+
+	if (!params.success) throw params.error.issues;
+
+	const { id } = params.data;
 
 	await useDrizzle()
 		.delete(prayerTables.trackedPrayer)

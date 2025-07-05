@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 	future: { compatibilityVersion: 4 },
 	compatibilityDate: "2025-05-15",
 	devtools: { enabled: true },
-	modules: ["@nuxt/eslint", "@nuxt/icon", "@nuxt/ui"],
+	modules: ["@nuxt/eslint", "@nuxt/ui"],
 	css: ["~/assets/css/main.css"],
 	runtimeConfig: {
 		turso: { databaseUrl: "", authToken: "" },
@@ -59,7 +59,6 @@ export default defineNuxtConfig({
 			],
 		},
 	},
-	// disabling provider bunny for nuxt fonts
 	fonts: { providers: { bunny: false } },
 	nitro: {
 		experimental: { tasks: true },
