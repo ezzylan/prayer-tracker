@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const devEnv = import.meta.dev;
 const isLoadingGithub = ref(false);
 const isLoadingGoogle = ref(false);
 </script>
@@ -12,41 +11,49 @@ const isLoadingGoogle = ref(false);
 		<p class="text-xl font-semibold tracking-tight scroll-m-20">
 			You are not signed in
 		</p>
-		<UButton
-			v-if="devEnv"
-			color="neutral"
-			variant="solid"
-			:loading="isLoadingGithub"
-			trailing
-			trailing-icon="i-logos-github-icon"
-			@click="
-				() => {
-					isLoadingGithub = true;
-					githubSignIn();
-				}
-			"
-		>
-			{{
-				isLoadingGithub
-					? "Signing in..."
-					: "Sign in with GitHub (dev only)"
-			}}
-		</UButton>
-		<UButton
-			v-else
-			color="neutral"
-			variant="solid"
-			:loading="isLoadingGoogle"
-			trailing
-			trailing-icon="i-logos-google-icon"
-			@click="
-				() => {
-					isLoadingGoogle = true;
-					googleSignIn();
-				}
-			"
-		>
-			{{ isLoadingGoogle ? "Signing in..." : "Sign in with Google" }}
-		</UButton>
+
+		<DevOnly>
+			<UButton
+				color="neutral"
+				variant="solid"
+				:loading="isLoadingGithub"
+				trailing
+				trailing-icon="i-logos-github-icon"
+				@click="
+					() => {
+						isLoadingGithub = true;
+						githubSignIn();
+					}
+				"
+			>
+				{{
+					isLoadingGithub
+						? "Signing in..."
+						: "Sign in with GitHub (dev only)"
+				}}
+			</UButton>
+
+			<template #fallback>
+				<UButton
+					color="neutral"
+					variant="solid"
+					:loading="isLoadingGoogle"
+					trailing
+					trailing-icon="i-logos-google-icon"
+					@click="
+						() => {
+							isLoadingGoogle = true;
+							googleSignIn();
+						}
+					"
+				>
+					{{
+						isLoadingGoogle
+							? "Signing in..."
+							: "Sign in with Google"
+					}}
+				</UButton>
+			</template>
+		</DevOnly>
 	</UCard>
 </template>

@@ -5,7 +5,29 @@ const today = new Date();
 const hijriToday = toHijri(today);
 
 const { data: session } = await useSession(useFetch);
-const { data: zones } = await useFetch("/api/zones", { key: "zones" });
+
+type FetchedZones = {
+	jakimCode: string;
+	negeri: string;
+	daerah: string;
+};
+
+const nuxtApp = useNuxtApp();
+
+const { data: zones } = await useFetch<FetchedZones[]>(
+	"https://api.waktusolat.app/zones",
+	{
+		key: "zones",
+		transform: (zones) =>
+			zones.map((zone) => ({
+				...zone,
+				label: `${zone.jakimCode} - ${zone.daerah}`,
+			})),
+		getCachedData(key) {
+			return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
+		},
+	}
+);
 
 const { zoneId, pending } = useZone();
 
@@ -41,12 +63,12 @@ const { data: trackedPrayers } = await useFetch("/api/tracked-prayers", {
 				</div>
 
 				<USelectMenu
-					v-model="zoneId"
-					v-model:loading="pending"
-					placeholder="Loading zones..."
-					value-key="id"
-					:items="zones"
 					class="w-48"
+					v-model="zoneId"
+					:loading="pending"
+					:items="zones || []"
+					value-key="jakimCode"
+					placeholder="Loading zones..."
 				/>
 
 				<MissedPrayers />

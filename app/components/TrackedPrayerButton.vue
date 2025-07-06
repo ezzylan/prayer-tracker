@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format, fromUnixTime } from "date-fns";
+
 const { prayer } = defineProps<{ prayer: FocusedPrayer }>();
 
 const { data: trackedPrayers } =
@@ -37,19 +39,25 @@ const color = computed(() => (prayer.isCompleted ? "success" : "neutral"));
 
 const { zoneId } = useZone();
 
-const { data: prayerTimes, status } = await useFetch("/api/prayer-times", {
-	key: "prayer-times",
-	query: { zoneId },
-	lazy: true,
-	server: false,
-	pick: ["items"],
-});
-
-const prayerTime = computed(
-	() =>
-		prayerTimes.value?.items?.find((item) => item.label === prayer.name)
-			?.value
+const { data: todayPrayers, status } = await useFetch(
+	() => `/api/prayer-times/${zoneId.value}`,
+	{
+		key: "prayer-times",
+		lazy: true,
+	}
 );
+
+const prayerTime = computed(() => {
+	if (!todayPrayers.value) {
+		return "";
+	}
+
+	const prayerTimestamp = todayPrayers.value[
+		prayer.name.toLowerCase() as keyof PrayerTime
+	] as number;
+
+	return format(fromUnixTime(prayerTimestamp), "hh:mm a");
+});
 </script>
 
 <template>
