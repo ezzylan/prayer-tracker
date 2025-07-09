@@ -37,15 +37,7 @@ const icon = computed(() =>
 
 const color = computed(() => (prayer.isCompleted ? "success" : "neutral"));
 
-const { zoneId } = useZone();
-
-const { data: todayPrayers, status } = await useFetch(
-	() => `/api/prayer-times/${zoneId.value}`,
-	{
-		key: "prayer-times",
-		lazy: true,
-	}
-);
+const { data: todayPrayers } = useNuxtData<PrayerTime>("prayer-times");
 
 const prayerTime = computed(() => {
 	if (!todayPrayers.value) {
@@ -70,10 +62,7 @@ const prayerTime = computed(() => {
 	>
 		<div class="flex justify-between w-full">
 			<span>{{ prayer.name }}</span>
-			<USkeleton
-				v-if="status === 'pending' || !prayerTime"
-				class="h-6 w-[62px]"
-			/>
+			<USkeleton v-if="!prayerTime" class="h-6 w-[62px]" />
 			<span v-else>{{ prayerTime }}</span>
 		</div>
 	</UButton>

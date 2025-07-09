@@ -1,35 +1,5 @@
 <script setup lang="ts">
-import { formatHijriDate, toHijri } from "taqwim-core-utils";
-
-const today = new Date();
-const hijriToday = toHijri(today);
-
 const { data: session } = await useSession(useFetch);
-
-type FetchedZones = {
-	jakimCode: string;
-	negeri: string;
-	daerah: string;
-};
-
-const nuxtApp = useNuxtApp();
-
-const { data: zones } = await useFetch<FetchedZones[]>(
-	"https://api.waktusolat.app/zones",
-	{
-		key: "zones",
-		transform: (zones) =>
-			zones.map((zone) => ({
-				...zone,
-				label: `${zone.jakimCode} - ${zone.daerah}`,
-			})),
-		getCachedData(key) {
-			return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
-		},
-	}
-);
-
-const { zoneId, pending } = useZone();
 
 const { data: trackedPrayers } = await useFetch("/api/tracked-prayers", {
 	key: "tracked-prayers",
@@ -37,40 +7,14 @@ const { data: trackedPrayers } = await useFetch("/api/tracked-prayers", {
 </script>
 
 <template>
+	<NuxtPwaManifest />
 	<UApp>
 		<main class="flex flex-col items-center justify-center h-screen gap-8">
 			<template v-if="session">
 				<UButton color="neutral" @click="signOut()">Sign Out</UButton>
 
-				<div class="flex flex-col items-center gap-1">
-					<UBadge>TODAY</UBadge>
-					<h1
-						class="text-2xl font-semibold tracking-tight scroll-m-20"
-					>
-						<NuxtTime
-							:datetime="today"
-							weekday="long"
-							month="long"
-							day="numeric"
-						/>
-					</h1>
-					<h2
-						v-if="hijriToday"
-						class="text-xl tracking-tight scroll-m-20"
-					>
-						{{ formatHijriDate(hijriToday, "iMMM iD, iYYYY") }} AH
-					</h2>
-				</div>
-
-				<USelectMenu
-					class="w-48"
-					v-model="zoneId"
-					:loading="pending"
-					:items="zones || []"
-					value-key="jakimCode"
-					placeholder="Loading zones..."
-				/>
-
+				<TodayDates />
+				<ZonesSelectMenu />
 				<MissedPrayers />
 
 				<div class="flex flex-col gap-2 w-3xs">
