@@ -47,7 +47,7 @@ const deleteAllMissedPrayers = async () => {
 		:description="`${missedPrayers?.length} more to go! 💪🏻`"
 		:ui="{
 			content: 'w-2xs',
-			body: 'flex flex-col gap-2',
+			body: 'flex flex-col gap-2 max-h-70',
 			footer: 'justify-end',
 		}"
 	>

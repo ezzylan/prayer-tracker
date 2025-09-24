@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: session } = await useSession(useFetch);
+const session = useSession();
 
 const { data: trackedPrayers } = await useFetch("/api/tracked-prayers", {
 	key: "tracked-prayers",

@@ -35,7 +35,7 @@ export default defineTask({
 				.returning()
 				.get();
 
-			console.log("New prayers inserted successfully for all users.");
+			console.log("New prayers inserted successfully for all users");
 
 			return { result: "Success", data: insertedPrayers };
 		} catch (error) {

@@ -20,7 +20,7 @@ export default defineTask({
 					)
 				);
 
-			console.log("Old prayers deleted successfully for all users.");
+			console.log("Old prayers deleted successfully for all users");
 
 			return { result: "Success" };
 		} catch (error) {

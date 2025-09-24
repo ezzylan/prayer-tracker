@@ -53,13 +53,7 @@ const prayerTime = computed(() => {
 </script>
 
 <template>
-	<UButton
-		:icon
-		:color
-		size="xl"
-		@click="updatePrayer()"
-		:ui="{ base: 'cursor-pointer' }"
-	>
+	<UButton :icon :color size="xl" @click="updatePrayer()">
 		<div class="flex justify-between w-full">
 			<span>{{ prayer.name }}</span>
 			<USkeleton v-if="!prayerTime" class="h-6 w-[62px]" />

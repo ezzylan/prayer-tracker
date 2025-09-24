@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { H3Event } from "h3";
-import { schema, useDrizzle } from "./drizzle";
 
 const { google, github } = useRuntimeConfig();
 

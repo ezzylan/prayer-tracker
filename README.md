@@ -31,13 +31,15 @@ To run this project, you will need to add the following environment variables to
 -   `NUXT_GOOGLE_CLIENT_SECRET`
 -   `NUXT_GITHUB_CLIENT_ID` (used in dev env only)
 -   `NUXT_GITHUB_CLIENT_SECRET` (used in dev env only)
+-   `NUXT_TASK_SECRET`
+-   `URL` (your base URL)
 
 For easy setup, just duplicate the `.env.example` file and start from there.
 
 ## Roadmap
 
 -   [x] Show today's prayer times
--   [ ] PWA support
+-   [x] PWA support
 -   [ ] Show notification for uncompleted prayer
 -   [ ] Make syncing optional (local-first)
 
