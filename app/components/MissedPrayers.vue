@@ -17,6 +17,8 @@ const { data: session } = await useSession(useFetch);
 
 let previousMissedPrayers = [] as FocusedPrayer[];
 
+const toast = useToast();
+
 const deleteAllMissedPrayers = async () => {
 	await $fetch("/api/missed-prayers", {
 		method: "DELETE",
@@ -32,9 +34,22 @@ const deleteAllMissedPrayers = async () => {
 		},
 		onResponseError() {
 			missedPrayers.value = previousMissedPrayers;
+
+			toast.add({
+				title: "Failed to delete all missed prayers.",
+				description: "Please try again.",
+				icon: "i-lucide-circle-x",
+				color: "error",
+			});
 		},
 		async onResponse() {
 			await refreshNuxtData("missed-prayers");
+
+			toast.add({
+				title: "Deleted all missed prayers.",
+				icon: "i-lucide-circle-check",
+				color: "success",
+			});
 		},
 	});
 };
@@ -42,7 +57,7 @@ const deleteAllMissedPrayers = async () => {
 
 <template>
 	<UModal
-		v-model="openMissedPrayersModal"
+		v-model:open="openMissedPrayersModal"
 		title="Missed Prayers"
 		:description="`${missedPrayers?.length} more to go! 💪🏻`"
 		:ui="{
@@ -88,7 +103,7 @@ const deleteAllMissedPrayers = async () => {
 
 		<template #footer>
 			<UModal
-				v-model="openDeleteMissedPrayersModal"
+				v-model:open="openDeleteMissedPrayersModal"
 				title="Do you wish to clear all missed prayers?"
 				description="All missed prayers will be deleted from the database once you've confirmed."
 				:ui="{ footer: 'justify-end' }"

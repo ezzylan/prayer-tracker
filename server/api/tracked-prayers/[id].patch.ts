@@ -3,19 +3,15 @@ import * as z from "zod";
 export default defineEventHandler(async (event) => {
 	await checkAuthenticatedUser(event);
 
-	const body = await readValidatedBody(event, (body) =>
-		z.object({ isCompleted: z.boolean() }).safeParse(body)
+	const { isCompleted } = await readValidatedBody(
+		event,
+		z.object({ isCompleted: z.boolean() }).parse
 	);
 
-	if (!body.success) throw body.error.issues;
-	const { isCompleted } = body.data;
-
-	const params = await getValidatedRouterParams(event, (body) =>
-		z.object({ id: z.string() }).safeParse(body)
+	const { id } = await getValidatedRouterParams(
+		event,
+		z.object({ id: z.string() }).parse
 	);
-
-	if (!params.success) throw params.error.issues;
-	const { id } = params.data;
 
 	await useDrizzle()
 		.update(prayerTables.trackedPrayer)

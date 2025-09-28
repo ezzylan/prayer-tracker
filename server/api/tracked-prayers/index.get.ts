@@ -1,8 +1,8 @@
 import { formatISO } from "date-fns";
 
 export default defineEventHandler(async (event) => {
-	const session = await checkAuthenticatedUser(event);
-	const userId = session.user.id;
+	const { user } = await checkAuthenticatedUser(event);
+	const userId = user.id;
 
 	const db = useDrizzle();
 	const todayDate = formatISO(new Date()).split("T")[0];

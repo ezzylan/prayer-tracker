@@ -1,8 +1,7 @@
 import { formatISO } from "date-fns";
 
 export default defineEventHandler(async (event) => {
-	const session = await checkAuthenticatedUser(event);
-	const userId = session.user.id;
+	const { user } = await checkAuthenticatedUser(event);
 
 	const db = useDrizzle();
 	const todayDate = formatISO(new Date()).split("T")[0];
@@ -12,7 +11,7 @@ export default defineEventHandler(async (event) => {
 		.from(prayerTables.trackedPrayer)
 		.where(
 			and(
-				eq(prayerTables.trackedPrayer.userId, userId),
+				eq(prayerTables.trackedPrayer.userId, user.id),
 				lt(prayerTables.trackedPrayer.date, todayDate)
 			)
 		);

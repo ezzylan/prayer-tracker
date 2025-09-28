@@ -8,6 +8,7 @@ export default defineNuxtConfig({
 	vite: { plugins: [tailwindcss()] },
 	modules: ["@nuxt/eslint", "@nuxt/ui", "@vite-pwa/nuxt"],
 	css: ["~/assets/css/main.css"],
+	fonts: { providers: { bunny: false } },
 	runtimeConfig: {
 		turso: { databaseUrl: "", authToken: "" },
 		google: { clientId: "", clientSecret: "" },
@@ -63,7 +64,6 @@ export default defineNuxtConfig({
 			],
 		},
 	},
-	fonts: { providers: { bunny: false } },
 	// nitro: {
 	// 	experimental: { tasks: true },
 	// 	scheduledTasks: {

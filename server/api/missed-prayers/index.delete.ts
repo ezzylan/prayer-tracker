@@ -3,13 +3,10 @@ import * as z from "zod";
 export default defineEventHandler(async (event) => {
 	await checkAuthenticatedUser(event);
 
-	const body = await readValidatedBody(event, (body) =>
-		z.object({ userId: z.string() }).safeParse(body)
+	const { userId } = await readValidatedBody(
+		event,
+		z.object({ userId: z.string() }).parse
 	);
-
-	if (!body.success) throw body.error.issues;
-
-	const { userId } = body.data;
 
 	await useDrizzle()
 		.delete(prayerTables.trackedPrayer)

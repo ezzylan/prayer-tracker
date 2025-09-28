@@ -1,6 +1,5 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { H3Event } from "h3";
 
 const { google, github } = useRuntimeConfig();
 
@@ -9,6 +8,9 @@ export const auth = betterAuth({
 		provider: "sqlite",
 		schema,
 	}),
+	session: {
+		cookieCache: { enabled: true, maxAge: 5 * 60 },
+	},
 	socialProviders: {
 		google: {
 			clientId: google.clientId,
@@ -29,17 +31,20 @@ export const auth = betterAuth({
 	},
 });
 
-export const checkAuthenticatedUser = async (event: H3Event) => {
-	const session = await auth.api.getSession({
-		headers: event.headers,
-	});
-
-	if (!session) {
-		throw createError({
-			statusCode: 401,
-			statusMessage: "Unauthorized",
+export const checkAuthenticatedUser = defineCachedFunction(
+	async (event) => {
+		const session = await auth.api.getSession({
+			headers: event.headers,
 		});
-	}
 
-	return session;
-};
+		if (!session) {
+			throw createError({
+				statusCode: 401,
+				statusMessage: "Unauthorized",
+			});
+		}
+
+		return session;
+	},
+	{ maxAge: 5 * 60 }
+);
